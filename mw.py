@@ -1,9 +1,9 @@
-def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tier="", souls="", item_icon="", item_description="", item_stat1="", item_stat2="", item_stat3="", item_stat4="", item_stat5="", item_stat6="", item_stat7="", has_components=False, component1_name="Basic Magazine", has_passive1=False, passive1_cooldown="", passive1_description="", passive1_stat1="", passive1_stat2="", passive1_stat3="", passive1_stat4="", passive1_stat5="", passive1_stat6="", has_passive2=False, passive2_cooldown="", passive2_description="", passive2_stat1="", passive2_stat2="", passive2_stat3="", passive2_stat4="", passive2_stat5="", has_active1=False, active1_cooldown="", active1_description="", active1_stat1="", active1_stat2="", active1_stat3="", active1_stat4="", active1_stat5="", active1_stat6="", has_iscomponentof=False, iscomponentof1_name="Basic Magazine", sound1="", sound2=""):
+def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tier=None, souls=None, item_icon=None, item_description=None, item_stat1=None, item_stat2=None, item_stat3=None, item_stat4=None, item_stat5=None, item_stat6=None, item_stat7=None, component1_name=None, passive1_cooldown=None, passive1_description=None, passive1_stat1=None, passive1_stat2=None, passive1_stat3=None, passive1_stat4=None, passive1_stat5=None, passive1_stat6=None, passive2_cooldown=None, passive2_description=None, passive2_stat1=None, passive2_stat2=None, passive2_stat3=None, passive2_stat4=None, passive2_stat5=None, active1_cooldown=None, active1_description=None, active1_stat1=None, active1_stat2=None, active1_stat3=None, active1_stat4=None, active1_stat5=None, active1_stat6=None, iscomponentof1_name=None, sound1=None, sound2=None):
     """
     Converts the full, complex MediaWiki template to equivalent HTML.
 
     Args:
-        ... (All parameters from the MediaWiki template)
+        ... (All parameters from the MediaWiki template, now None-able)
 
     Returns:
         An HTML string representing the generated table.
@@ -61,90 +61,88 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
     }.get(f"{item_type}/{item_tier if item_tier else '1'}", "+0").get(item_type, "+0")
 
     html = f'''
-    <table style="{table_style}">
-        <tr>
-            <td colspan="4" style="{header_style}"><span style="font-weight:bold; text-shadow: 2px 2px rgba(0, 0, 0, 0.2); ">{item_name}</span></td>
-            <td rowspan="2" style="text-align:right; border-radius:0px 8px 0px 0px; {header_style}"><span>[[File:{item_icon if item_icon else item_name}.png|64px]]</span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="{header_style}"><div style="{shop_bonus_style}">{shop_bonus_content}</div></td>
-        </tr>
-        <tr>
-            <td colspan=4 class="infobox-image" style="padding:5px; text-align:center;">[[File:{item_icon if item_icon else item_name}.png|144px]]</td>
-        </tr>
-        <tr>
-            <td colspan=2 style="text-align:right; width:50%; border-right:1px solid {header_style.split('background-color: ')[1].split(';')[0]}; padding-right:0.5em;">Cost</td>
-            <td colspan=2 style="padding-left:0.5em;">{souls}</td>
-        </tr>
-        <tr>
-            <td colspan=2 style="text-align:right; width:50%; border-right:1px solid {header_style.split('background-color: ')[1].split(';')[0]}; padding-right:0.5em;">Tier</td>
-            <td colspan=2 style="padding-left:0.5em;">{item_tier}</td>
-        </tr>
-        <tr>
-            <td colspan=2 style="text-align:right; width:50%; border-right:1px solid {header_style.split('background-color: ')[1].split(';')[0]}; padding-right:0.5em;">Shop Bonus</td>
-            <td colspan=2 style="padding-left:0.5em;">{shop_bonus_text}</td>
-        </tr>
-    '''
+        <table style="{table_style}">
+            <tr>
+                <td colspan="5" style="{header_style}"><span style="font-weight:bold; text-shadow: 2px 2px rgba(0, 0, 0, 0.2); ">{item_name}</span></td>
+            </tr>
+            <tr>
+                <td colspan="5" style="{header_style}"><div style="{shop_bonus_style}">{shop_bonus_content}</div></td>
+            </tr>
+            <tr>
+                <td colspan=5 class="infobox-image" style="padding:5px; text-align:center;">[[File:{item_icon if item_icon else item_name}.png|144px]]</td>
+            </tr>
+            <tr>
+                <td colspan=3 style="text-align:right; width:50%; border-right:1px solid {header_style.split('background-color: ')[1].split(';')[0]}; padding-right:0.5em;">Cost</td>
+                <td colspan=2 style="padding-left:0.5em;">{souls if souls else ''}</td>
+            </tr>
+            <tr>
+                <td colspan=3 style="text-align:right; width:50%; border-right:1px solid {header_style.split('background-color: ')[1].split(';')[0]}; padding-right:0.5em;">Tier</td>
+                <td colspan=2 style="padding-left:0.5em;">{item_tier if item_tier else ''}</td>
+            </tr>
+            <tr>
+                <td colspan=3 style="text-align:right; width:50%; border-right:1px solid {header_style.split('background-color: ')[1].split(';')[0]}; padding-right:0.5em;">Shop Bonus</td>
+                <td colspan=2 style="padding-left:0.5em;">{shop_bonus_text}</td>
+            </tr>
+        '''
 
-    if has_components:
+    if component1_name is not None:
         html += f'''
         <tr>
             <td colspan="4" style="text-align:left; padding:0 12px; font-weight:bold; font-size:16px; font-family:'Retail Demo Bold',serif; background-color: {passive_header_style.split('background-color: ')[1].split(';')[0]}; color: {passive_header_style.split('color: ')[1].split(';')[0]};">COMPONENTS:<br/>{{ItemIcon|{component1_name}}}</td>
         </tr>
         '''
 
-    if item_description:
+    if item_description is not None:
         html += f'''
         <tr>
             <td colspan="4" style="text-align:left; padding:0 12px; color:#FFEFD7; background-color: {table_style.split('background-color: ')[1].split(';')[0]};">{item_description}</td>
         </tr>
         '''
 
-    if item_stat1:
+    if item_stat1 is not None:
         html += f'''
         <tr>
             <td colspan=4 style="text-align:left; padding:2px 12px; background-color: {table_style.split('background-color: ')[1].split(';')[0]};">{item_stat1}</td>
         </tr>
         '''
-    if item_stat2:
+    if item_stat2 is not None:
         html += f'''
         <tr>
             <td colspan=4 style="text-align:left; padding:2px 12px; background-color: {table_style.split('background-color: ')[1].split(';')[0]};">{item_stat2}</td>
         </tr>
         '''
-    if item_stat3:
+    if item_stat3 is not None:
         html += f'''
         <tr>
             <td colspan=4 style="text-align:left; padding:2px 12px; background-color: {table_style.split('background-color: ')[1].split(';')[0]};">{item_stat3}</td>
         </tr>
         '''
-    if item_stat4:
+    if item_stat4 is not None:
         html += f'''
         <tr>
             <td colspan=4 style="text-align:left; padding:2px 12px; background-color: {table_style.split('background-color: ')[1].split(';')[0]};">{item_stat4}</td>
         </tr>
         '''
-    if item_stat5:
+    if item_stat5 is not None:
         html += f'''
         <tr>
             <td colspan=4 style="text-align:left; padding:2px 12px; background-color: {table_style.split('background-color: ')[1].split(';')[0]};">{item_stat5}</td>
         </tr>
         '''
-    if item_stat6:
+    if item_stat6 is not None:
         html += f'''
         <tr>
             <td colspan=4 style="text-align:left; padding:2px 12px; background-color: {table_style.split('background-color: ')[1].split(';')[0]};">{item_stat6}</td>
         </tr>
         '''
-    if item_stat7:
+    if item_stat7 is not None:
         html += f'''
         <tr>
             <td colspan=4 style="text-align:left; padding:2px 12px; background-color: {table_style.split('background-color: ')[1].split(';')[0]};">{item_stat7}</td>
         </tr>
         '''
 
-    if has_passive1:
+    if passive1_description is not None or passive1_stat1 is not None or passive1_stat2 is not None or passive1_stat3 is not None or passive1_stat4 is not None or passive1_stat5 is not None or passive1_stat6 is not None:
         cooldown_html = f'<td colspan=1 style="text-align:center; width:25%; max-width:80px; background-color:#0C1414; color:#FFEFD7;">[[File:Cooldown Icon.png|20px]] {passive1_cooldown}</td>' if passive1_cooldown else ''
         colspan = 4 - (1 if passive1_cooldown else 0)
         html += f'''
@@ -158,7 +156,7 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
                 <td colspan=4 style="text-align:left; padding:2px 12px;">{passive1_description}</td>
             </tr>
             '''
-        if passive1_stat1 or passive1_stat2 or passive1_stat3 or passive1_stat4 or passive1_stat5 or passive1_stat6:
+        if passive1_stat1 is not None or passive1_stat2 is not None or passive1_stat3 is not None or passive1_stat4 is not None or passive1_stat5 is not None or passive1_stat6 is not None:
             html += f'''
             <tr>
                 <td colspan=4 style="{passive_stat_box_style}">
@@ -177,7 +175,7 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
                 html += f'<tr><td>{passive1_stat6}</td></tr>'
             html += '</td></tr>'
 
-    if has_passive2:
+    if passive2_description is not None or passive2_stat1 is not None or passive2_stat2 is not None or passive2_stat3 is not None or passive2_stat4 is not None or passive2_stat5 is not None:
         cooldown_html = f'<td colspan=1 style="text-align:center; width:25%; max-width:80px; background-color:#0C1414; color:#FFEFD7;">[[File:Cooldown Icon.png|20px]] {passive2_cooldown}</td>' if passive2_cooldown else ''
         colspan = 4 - (1 if passive2_cooldown else 0)
         html += f'''
@@ -191,7 +189,7 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
                 <td colspan=4 style="text-align:left; padding:2px 12px;">{passive2_description}</td>
             </tr>
             '''
-        if passive2_stat1 or passive2_stat2 or passive2_stat3 or passive2_stat4 or passive2_stat5:
+        if passive2_stat1 is not None or passive2_stat2 is not None or passive2_stat3 is not None or passive2_stat4 is not None or passive2_stat5 is not None:
             html += f'''
             <tr>
                 <td colspan=4 style="{passive_stat_box_style}">
@@ -208,8 +206,8 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
                 html += f'<tr><td>{passive2_stat5}</td></tr>'
             html += '</td></tr>'
 
-    if has_active1:
-        cooldown_html = f'<td colspan=1 style="text-align;center; width:25%; max-width:80px; background-color:#0C1414; color:#FFEFD7;">[[File:Cooldown Icon.png|20px]] {active1_cooldown}</td>' if active1_cooldown else ''
+    if active1_description is not None or active1_stat1 is not None or active1_stat2 is not None or active1_stat3 is not None or active1_stat4 is not None or active1_stat5 is not None or active1_stat6 is not None:
+        cooldown_html= f'<td colspan=1 style="text-align:center; width:25%; max-width:80px; background-color:#0C1414; color:#FFEFD7;">[[File:Cooldown Icon.png|20px]] {active1_cooldown}</td>' if active1_cooldown else ''
         colspan = 4 - (1 if active1_cooldown else 0)
         html += f'''
         <tr>
@@ -222,7 +220,7 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
                 <td colspan=4 style="text-align:left; padding:2px 12px;">{active1_description}</td>
             </tr>
             '''
-        if active1_stat1 or active1_stat2 or active1_stat3 or active1_stat4 or active1_stat5 or active1_stat6:
+        if active1_stat1 is not None or active1_stat2 is not None or active1_stat3 is not None or active1_stat4 is not None or active1_stat5 is not None or active1_stat6 is not None:
             html += f'''
             <tr>
                 <td colspan=4 style="{passive_stat_box_style}">
@@ -241,14 +239,27 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
                 html += f'<tr><td>{active1_stat6}</td></tr>'
             html += '</td></tr>'
 
-    if has_iscomponentof:
-        html += f'''
-        <tr>
-            <td colspan="4" style="text-align:left; padding:0 12px; font-weight:bold; font-size:16px; font-family:'Retail Demo Bold',serif; background-color: #704A0C; color: #D1CBC6;">IS COMPONENT OF:<br/>{{ItemIcon|{iscomponentof1_name}}}</td>
-        </tr>
-        '''
+    if iscomponentof1_name is not None:
+            iscomponent_bg_color = "#704A0C"  # Default
+            iscomponent_text_color = "#D1CBC6"  # Default
 
-    if sound1:
+            if item_type == "Weapon":
+                iscomponent_bg_color = "#704A0C"
+                iscomponent_text_color = "#D1CBC6"
+            elif item_type == "Vitality":
+                iscomponent_bg_color = "#436310"
+                iscomponent_text_color = "#CACFC7"
+            elif item_type == "Spirit":
+                iscomponent_bg_color = "#552D74"
+                iscomponent_text_color = "#CCC8D2"
+
+            html += f'''
+            <tr>
+                <td colspan="4" style="text-align:left; padding:0 12px; font-weight:bold; font-size:16px; font-family:'Retail Demo Bold',serif; background-color: {iscomponent_bg_color}; color: {iscomponent_text_color};">IS COMPONENT OF:<br/>{{ItemIcon|{iscomponentof1_name}}}</td>
+            </tr>
+            '''
+
+    if sound1 is not None:
         html += f'''
         <tr>
             <td colspan=4 style="text-align:center; padding:2px 12px; background-color: {header_style.split('background-color: ')[1].split(';')[0]};">Sounds</td>
@@ -258,7 +269,7 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
         </tr>
         '''
 
-    if sound2:
+    if sound2 is not None:
         html += f'''
         <tr>
             <td colspan="4">[[File:{sound2}]]</td>
@@ -267,17 +278,26 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
 
     html += "</table>"
     return html
+
+# print(mediawiki_template_to_html_full(
+#     item_name="Basic Magazine",
+#     item_type="Vitality",
+#     item_tier="1",
+#     item_stat1="+26% [[Ammo]]",
+#     item_stat2="+12% [[Weapon Damage]]",
+#     souls="500",
+#     iscomponentof1_name="vitality item"
+# ))
 print(mediawiki_template_to_html_full(
-    item_name="Basic Magazine",
-    item_type="Weapon",
-    item_tier="1",
-    has_components=False,
-    has_passive1=False,
-    has_passive2=False,
-    has_active1=False,
-    has_iscomponentof=True,
-    item_stat1="+26% [[Ammo]]",
-    item_stat2="+12% [[Weapon Damage]]",
-    souls="500",
-    iscomponentof1_name="Titanic Magazine"
+    item_name="Surge of Power",
+    item_type="Spirit",
+    item_tier="3",
+    souls="3,000",
+    item_stat1="+75 Bonus Health",
+    passive1_description="Imbue an ability with '''permanent Spirit Power'''. When that ability is used, gain bonus '''Move Speed''' and maintain full speed while attacking.",
+    passive1_cooldown="10.5s",
+    passive1_stat1="+34 Imbued Ability Spirit Power",
+    passive1_stat2="15% Fire Rate Bonus (Conditional)",
+    passive1_stat3="+2m/s Move Speed (Conditional)",
+    passive1_stat4="6s Move Speed Duration"
 ))

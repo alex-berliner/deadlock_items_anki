@@ -1,5 +1,5 @@
 from deadlock_anki import *
-def mediawiki_template_to_html_full(call_params):
+def mw_html(call_params):
     """
     Generates HTML output from mediawiki template parameters.
     """
@@ -324,7 +324,7 @@ def mediawiki_template_to_html_full(call_params):
     html += "</table>"
     return html
 
-# print(mediawiki_template_to_html_full(
+# print(mw_html(
 #     item_name="Basic Magazine",
 #     item_type="Vitality",
 #     item_tier="1",
@@ -333,7 +333,7 @@ def mediawiki_template_to_html_full(call_params):
 #     souls="500",
 #     iscomponentof1_name="vitality item"
 # ))
-# print(mediawiki_template_to_html_full(
+# print(mw_html(
 #     item_name="Surge of Power",
 #     item_type="Spirit",
 #     item_tier="3",
@@ -346,7 +346,7 @@ def mediawiki_template_to_html_full(call_params):
 #     passive1_stat3="+2m/s Move Speed (Conditional)",
 #     passive1_stat4="6s Move Speed Duration"
 # ))
-# print(mediawiki_template_to_html_full(
+# print(mw_html(
 #     item_name="Improved Spirit",
 #     item_type="Spirit",
 #     item_tier="3",
@@ -365,9 +365,10 @@ def main():
     in_shop = get_shopable_items(items)
     # print(in_shop)
     item = item_to_card(in_shop[0])
-    call_params = json_to_mediawiki_vars(in_shop[41])
-    html = mediawiki_template_to_html_full(call_params)
-    print(html)
+    call_params = mw_vars(in_shop[41])
+    html = mw_html(call_params)
+    all_html = [mw_html(mw_vars(x)) for x in in_shop]
+    print("\n".join(all_html))
 
 if __name__ == "__main__":
     main()

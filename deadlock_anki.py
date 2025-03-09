@@ -70,7 +70,7 @@ def item_to_card(item):
 
     return "\n".join(card)
 
-def json_to_mediawiki_vars(item_json):
+def mw_vars(item_json):
     """
     Converts a JSON item description to a dictionary of variables for mediawiki_template_to_html_full.
     Excludes stats with a value of 0.
@@ -204,7 +204,7 @@ def main():
     # print(json.loads(json.dumps(in_shop[0])))
     # print(item)
     # pprint.pp(items[1])
-    print(json_to_mediawiki_vars(in_shop[41]))
+    print(mw_vars(in_shop[41]))
     # for (i,e) in enumerate(in_shop):
     #     if "surge" in e["name"].lower():
     #         print(i, e["name"])

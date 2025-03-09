@@ -1,4 +1,49 @@
-def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tier=None, souls=None, item_icon=None, item_description=None, item_stat1=None, item_stat2=None, item_stat3=None, item_stat4=None, item_stat5=None, item_stat6=None, item_stat7=None, component1_name=None, passive1_cooldown=None, passive1_description=None, passive1_stat1=None, passive1_stat2=None, passive1_stat3=None, passive1_stat4=None, passive1_stat5=None, passive1_stat6=None, passive2_cooldown=None, passive2_description=None, passive2_stat1=None, passive2_stat2=None, passive2_stat3=None, passive2_stat4=None, passive2_stat5=None, active1_cooldown=None, active1_description=None, active1_stat1=None, active1_stat2=None, active1_stat3=None, active1_stat4=None, active1_stat5=None, active1_stat6=None, iscomponentof1_name=None, sound1=None, sound2=None):
+from deadlock_anki import *
+def mediawiki_template_to_html_full(call_params):
+    """
+    Generates HTML output from mediawiki template parameters.
+    """
+
+    item_type = call_params.get("item_type")
+    item_name = call_params.get("item_name", "Heroic Aura")
+    item_tier = call_params.get("item_tier")
+    souls = call_params.get("souls")
+    item_icon = call_params.get("item_icon")
+    item_description = call_params.get("item_description")
+    item_stat1 = call_params.get("item_stat1")
+    item_stat2 = call_params.get("item_stat2")
+    item_stat3 = call_params.get("item_stat3")
+    item_stat4 = call_params.get("item_stat4")
+    item_stat5 = call_params.get("item_stat5")
+    item_stat6 = call_params.get("item_stat6")
+    item_stat7 = call_params.get("item_stat7")
+    component1_name = call_params.get("component1_name")
+    passive1_cooldown = call_params.get("passive1_cooldown")
+    passive1_description = call_params.get("passive1_description")
+    passive1_stat1 = call_params.get("passive1_stat1")
+    passive1_stat2 = call_params.get("passive1_stat2")
+    passive1_stat3 = call_params.get("passive1_stat3")
+    passive1_stat4 = call_params.get("passive1_stat4")
+    passive1_stat5 = call_params.get("passive1_stat5")
+    passive1_stat6 = call_params.get("passive1_stat6")
+    passive2_cooldown = call_params.get("passive2_cooldown")
+    passive2_description = call_params.get("passive2_description")
+    passive2_stat1 = call_params.get("passive2_stat1")
+    passive2_stat2 = call_params.get("passive2_stat2")
+    passive2_stat3 = call_params.get("passive2_stat3")
+    passive2_stat4 = call_params.get("passive2_stat4")
+    passive2_stat5 = call_params.get("passive2_stat5")
+    active1_cooldown = call_params.get("active1_cooldown")
+    active1_description = call_params.get("active1_description")
+    active1_stat1 = call_params.get("active1_stat1")
+    active1_stat2 = call_params.get("active1_stat2")
+    active1_stat3 = call_params.get("active1_stat3")
+    active1_stat4 = call_params.get("active1_stat4")
+    active1_stat5 = call_params.get("active1_stat5")
+    active1_stat6 = call_params.get("active1_stat6")
+    iscomponentof1_name = call_params.get("iscomponentof1_name")
+    sound1 = call_params.get("sound1")
+    sound2 = call_params.get("sound2")
     """
     Converts the full, complex MediaWiki template to equivalent HTML.
 
@@ -288,16 +333,41 @@ def mediawiki_template_to_html_full(item_type, item_name="Heroic Aura", item_tie
 #     souls="500",
 #     iscomponentof1_name="vitality item"
 # ))
-print(mediawiki_template_to_html_full(
-    item_name="Surge of Power",
-    item_type="Spirit",
-    item_tier="3",
-    souls="3,000",
-    item_stat1="+75 Bonus Health",
-    passive1_description="Imbue an ability with '''permanent Spirit Power'''. When that ability is used, gain bonus '''Move Speed''' and maintain full speed while attacking.",
-    passive1_cooldown="10.5s",
-    passive1_stat1="+34 Imbued Ability Spirit Power",
-    passive1_stat2="15% Fire Rate Bonus (Conditional)",
-    passive1_stat3="+2m/s Move Speed (Conditional)",
-    passive1_stat4="6s Move Speed Duration"
-))
+# print(mediawiki_template_to_html_full(
+#     item_name="Surge of Power",
+#     item_type="Spirit",
+#     item_tier="3",
+#     souls="3,000",
+#     item_stat1="+75 Bonus Health",
+#     passive1_description="Imbue an ability with '''permanent Spirit Power'''. When that ability is used, gain bonus '''Move Speed''' and maintain full speed while attacking.",
+#     passive1_cooldown="10.5s",
+#     passive1_stat1="+34 Imbued Ability Spirit Power",
+#     passive1_stat2="15% Fire Rate Bonus (Conditional)",
+#     passive1_stat3="+2m/s Move Speed (Conditional)",
+#     passive1_stat4="6s Move Speed Duration"
+# ))
+# print(mediawiki_template_to_html_full(
+#     item_name="Improved Spirit",
+#     item_type="Spirit",
+#     item_tier="3",
+#     souls="3000",
+#     item_description="{s:sign}3 Health Regen. {s:sign}1mm/s Sprint Speed. {s:sign}125 Bonus Health. {s:sign}30 Spirit Power.",
+#     item_stat1="{s:sign}125 Bonus Health",
+#     item_stat2="{s:sign}3 Health Regen",
+#     item_stat3="{s:sign}1mm/s Sprint Speed",
+#     item_stat4="{s:sign}30 Spirit Power",
+#     component1_name="Improved Spirit",
+# ))
+
+def main():
+    items = get_deadlock_items()
+    # print(len(items))
+    in_shop = get_shopable_items(items)
+    # print(in_shop)
+    item = item_to_card(in_shop[0])
+    call_params = json_to_mediawiki_vars(in_shop[41])
+    html = mediawiki_template_to_html_full(call_params)
+    print(html)
+
+if __name__ == "__main__":
+    main()

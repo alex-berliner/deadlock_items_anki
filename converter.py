@@ -8,6 +8,7 @@ try {
         let newBody = document.createElement('body');
         newBody.appendChild(replacementElement.cloneNode(true)); // Clone to avoid removing from original DOM
         document.documentElement.replaceChild(newBody, originalBody);
+        document.body.style.backgroundColor = 'transparent';
     } else {
         console.error('XPath element not found.');
     }
@@ -21,7 +22,8 @@ try {
 # document.body.remove();
 # """
 options = {
-    '--run-script': javascript_code
+    '--run-script': javascript_code,
+    "--crop-w": "312"
 }
 
 # imgkit.from_url(url, output_path, options=options)

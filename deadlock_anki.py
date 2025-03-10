@@ -129,21 +129,7 @@ def mw_vars(item_json):
                 active1_stats.append(formatted_stat)
 
     #Extract description
-    description = ""
-    if tooltip_sections:
-        for section in tooltip_sections:
-            if section.get("section_type") == "innate":
-                attributes = section.get("section_attributes", [])
-                for attr in attributes:
-                    properties_list = attr.get("properties", [])
-                    elevated_properties = attr.get("elevated_properties", [])
-                    important_properties = attr.get("important_properties", [])
-
-                    for prop_name in properties_list + elevated_properties + important_properties:
-                        prop_data = properties.get(prop_name)
-                        if prop_data:
-                            description += f"{prop_data.get('prefix', '')}{prop_data.get('value', '')}{prop_data.get('postfix', '')} {prop_data.get('label', '')}. "
-
+    description = item_json.get("description", {}).get("desc", "")
     # Construct the function call
     call_params = {
         "item_name": item_name,
@@ -204,11 +190,13 @@ def main():
     # print(json.loads(json.dumps(in_shop[0])))
     # print(item)
     # pprint.pp(items[1])
-    print(mw_vars(in_shop[41]))
-    # for (i,e) in enumerate(in_shop):
-    #     if "surge" in e["name"].lower():
-    #         print(i, e["name"])
-        # print(e["name"])
+    # print(mw_vars(in_shop[41]))
+    # # for (i,e) in enumerate(in_shop):
+    # #     if "surge" in e["name"].lower():
+    # #         print(i, e["name"])
+    #     # print(e["name"])
+    # pprint.pp()
+    print("\n".join(x["name"].replace(" ", "_") for x in in_shop))
 
 if __name__ == "__main__":
     main()

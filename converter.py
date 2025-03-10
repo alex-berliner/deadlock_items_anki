@@ -1,4 +1,6 @@
+import os
 import imgkit
+
 javascript_code = """
 try {
     let originalBody = document.body;
@@ -18,14 +20,23 @@ try {
 }
 """
 
-# javascript_code = """
-# document.body.remove();
-# """
-options = {
-    '--run-script': javascript_code,
-    "--crop-w": "312"
-}
-
-# imgkit.from_url(url, output_path, options=options)
-imgkit.from_url('https://deadlock.wiki/Spirit_Lifesteal_(item)', 'out.jpg', options=options)
-# imgkit.from_string('Hello!', 'out.jpg')
+def make_item_image(url):
+    if not os.path.exists("images"):
+        os.makedirs("images")
+    front_options = {
+        '--run-script': javascript_code,
+        "--crop-w": "312",
+        "--crop-h": "195",
+    }
+    back_options = {
+        '--run-script': javascript_code,
+        "--crop-w": "312",
+        "--crop-y": "195"
+    }
+    img_name=url.split("/")[-1].strip()
+    front_path = f"images/{img_name}_front.png"
+    back_path = f"images/{img_name}_back.png"
+    if not os.path.exists(front_path):
+        imgkit.from_url(url, front_path, options=front_options)
+    if not os.path.exists(back_path):
+        imgkit.from_url(url, back_path, options=back_options)

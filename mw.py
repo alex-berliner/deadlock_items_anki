@@ -359,16 +359,16 @@ def mw_html(call_params):
 #     component1_name="Improved Spirit",
 # ))
 
-def main():
-    items = get_deadlock_items()
-    # print(len(items))
-    in_shop = get_shopable_items(items)
-    # print(in_shop)
-    item = item_to_card(in_shop[0])
-    call_params = mw_vars(in_shop[41])
-    html = mw_html(call_params)
+def print_all(in_shop):
     all_html = [mw_html(mw_vars(x)) for x in in_shop]
     print("\n".join(all_html))
+
+def main():
+    items = get_deadlock_items()
+    in_shop = get_shopable_items(items)
+    # print_all(in_shop)
+    # pprint.pp(in_shop[41]["description"])
+    print_all(in_shop)
 
 if __name__ == "__main__":
     main()

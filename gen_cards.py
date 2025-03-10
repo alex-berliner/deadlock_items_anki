@@ -9,7 +9,7 @@ def main():
         os.makedirs("build/collection.media")
     if not os.path.exists("build/cache"):
         os.makedirs("build/cache")
-    urls=get_urls()
+    urls=get_urls("5509")
     with concurrent.futures.ThreadPoolExecutor() as executor:
         results = list(executor.map(make_item_image, urls))
     for u in urls:

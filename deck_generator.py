@@ -1,13 +1,14 @@
 import concurrent.futures
 import requests
 import os
+from api import *
 
 # Remember to delete cache/ when the game is updated
 # This creates an index of all the items' urls in the deadlock wiki. Some items
 # have "_(item)" appended if the item's name is also something else,
 # ie "Bullet Lifesteal" is an item and a stat. So we have to figure out which
 # to use.
-def get_urls():
+def get_urls(client_version):
     def process_url(url):
         try:
             response = requests.get(url)
@@ -23,7 +24,7 @@ def get_urls():
         print("build/cache/urls.txt already exists. Skipping URL generation.")
         return open("build/cache/urls.txt", "r").readlines()
 
-    in_shop = get_shopable_items(get_deadlock_items())
+    in_shop = get_shopable_items(get_deadlock_items(client_version))
     urls = [wiki_url_prefix + x["name"].replace(" ", "_") for x in in_shop]
     r_urls = []
 
@@ -34,20 +35,22 @@ def get_urls():
         if result is not None:
             r_urls.append(result)
 
-    if not os.path.exists("cache"):
-        os.makedirs("cache")
+    if not os.path.exists("build/cache"):
+        os.makedirs("build/cache")
 
-    with open("cache/urls.txt", "w") as f:
+    with open("build/cache/urls.txt", "w") as f:
         for url in r_urls:
             f.write(url + "\n")
 
     return r_urls
 
-anki_deck_header="""
+anki_deck_header="""\
 #separator:tab
 #html:true
 """
-anki_card_format=""" "<img src=""$$ITEM_NAME$$_front.png"">"	"<img src=""$$ITEM_NAME$$_back.png"">" """
+anki_card_format="""\
+"<img src=""$$ITEM_NAME$$_front.png"">"	"<img src=""$$ITEM_NAME$$_back.png"">"\
+"""
 def make_deck(urls):
     o = anki_deck_header
     for e in urls:

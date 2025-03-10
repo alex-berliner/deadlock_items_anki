@@ -12,7 +12,7 @@ Download the master branch from github
 # Installation
 You must have python3 installed.
 
-## create a venv
+## Create a venv
 
 `python3 -m venv .mw`
 

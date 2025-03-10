@@ -2,8 +2,10 @@
 
 Generate Anki Flashcards for the items in Deadlock using info from https://www.deadlock-api.com and https://www.deadlock.wiki.
 
+![image](https://github.com/user-attachments/assets/0f2f636c-a7f4-43eb-83b3-e8a195741eea)
+
 # Download
-`git clone xxx`
+`git clone https://github.com/alex-berliner/deadlock_items_anki`
 or
 Download the master branch from github
 
@@ -38,3 +40,8 @@ The flashcard images must be copied from `build/collection.media` to your Anki u
 
 ## Step 2: Deck File
 The deck file is located at `build/deadlock_anki_import.txt`. Import it into the Anki desktop client.
+
+# Contact
+
+discord: @allocsb
+https://www.reddit.com/u/LavaSalesman/

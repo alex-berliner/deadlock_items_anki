@@ -1,7 +1,7 @@
 import os
 import imgkit
 
-javascript_code = """
+strip_page_js = """
 try {
     let originalBody = document.body;
     let replacementElement = document.evaluate('/html/body/div[2]/div/div[3]/main/div[3]/div[3]/div[1]/div/table', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
@@ -21,21 +21,19 @@ try {
 """
 
 def make_item_image(url):
-    if not os.path.exists("images"):
-        os.makedirs("images")
     front_options = {
-        '--run-script': javascript_code,
+        '--run-script': strip_page_js,
         "--crop-w": "312",
         "--crop-h": "195",
     }
     back_options = {
-        '--run-script': javascript_code,
+        '--run-script': strip_page_js,
         "--crop-w": "312",
         "--crop-y": "195"
     }
     img_name=url.split("/")[-1].strip()
-    front_path = f"images/{img_name}_front.png"
-    back_path = f"images/{img_name}_back.png"
+    front_path = f"build/collection.media/{img_name}_front.png"
+    back_path = f"build/collection.media/{img_name}_back.png"
     if not os.path.exists(front_path):
         imgkit.from_url(url, front_path, options=front_options)
     if not os.path.exists(back_path):

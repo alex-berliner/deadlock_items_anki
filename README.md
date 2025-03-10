@@ -36,7 +36,7 @@ All contents are placed in the `build` folder. You must import the deck file's .
 
 ## Step 1: Images
 
-The flashcard images must be copied from `build/collection.media` to your Anki user folder. Look [here](https://docs.ankiweb.net/files.html#file-locations) to find where yours is.
+Copy the flashcard images folder from `build/collection.media` to your Anki user folder. Look [here](https://docs.ankiweb.net/files.html#file-locations) to find where yours is.
 
 ## Step 2: Deck File
 The deck file is located at `build/deadlock_anki_import.txt`. Import it into the Anki desktop client.

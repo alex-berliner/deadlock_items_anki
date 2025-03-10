@@ -5,7 +5,7 @@ Generate Anki Flashcards for the items in Deadlock using info from https://www.d
 ![image](https://github.com/user-attachments/assets/0f2f636c-a7f4-43eb-83b3-e8a195741eea)
 
 # Download
-Use the cards live (here)[https://ankiweb.net/shared/info/1206856576].
+Use the cards live [here](https://ankiweb.net/shared/info/1206856576).
 
 Follow the below instructions to generate your own version of the cards.
 

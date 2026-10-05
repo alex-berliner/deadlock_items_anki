@@ -2,12 +2,12 @@ import requests
 
 """
 curl -X 'GET' \
-  'https://assets.deadlock-api.com/v2/items?language=english&client_version=5509' \
+  'https://api.deadlock-api.com/v1/assets/items?language=english&client_version=6746' \
   -H 'accept: application/json'
 """
 
 def get_deadlock_items(client_version, language="english"):
-    url = "https://assets.deadlock-api.com/v2/items"
+    url = "https://api.deadlock-api.com/v1/assets/items"
     headers = {
         "accept": "application/json"
     }
@@ -42,7 +42,7 @@ def get_shopable_items(items):
     return shopable_items
 
 def main():
-    in_shop = get_shopable_items(get_deadlock_items("5509"))
+    in_shop = get_shopable_items(get_deadlock_items("6746"))
 
 if __name__ == "__main__":
     main()

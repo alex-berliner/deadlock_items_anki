@@ -2,10 +2,11 @@
 
 Generate Anki Flashcards for the items in Deadlock using info from https://www.deadlock-api.com and https://www.deadlock.wiki.
 
-![image](https://github.com/user-attachments/assets/0f2f636c-a7f4-43eb-83b3-e8a195741eea)
+<img width="270" height="490" alt="Screenshot_20261005_184836_Firefox" src="https://github.com/user-attachments/assets/20b36796-a3ce-4374-8953-23eb0b107377" />
+
 
 # Download
-Use the cards live [here](https://ankiweb.net/shared/info/1206856576).
+Use the cards live [here](https://ankiweb.net/shared/info/157173328).
 
 Follow the below instructions to generate your own version of the cards.
 

@@ -1,5 +1,5 @@
 import concurrent.futures
-import requests
+from curl_cffi import requests as curl_requests
 import os
 from api import *
 
@@ -11,7 +11,10 @@ from api import *
 def get_urls(client_version):
     def process_url(url):
         try:
-            response = requests.get(url)
+            response = curl_requests.get(
+                url,
+                impersonate="chrome",
+            )
             response.raise_for_status()
             if "infobox_item" not in response.text:
                 url += "_(item)"
